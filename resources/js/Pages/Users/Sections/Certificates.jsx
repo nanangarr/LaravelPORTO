@@ -36,48 +36,22 @@ export default function CertificatesSection({ certificates }) {
                                 transition={{ duration: 0.5 }}
                                 className="bg-gray-900 backdrop-blur-md border border-orange-400/10 rounded-xl shadow-lg shadow-orange-500/20 transition-all duration-300 hover:shadow-orange-500/30 hover:-translate-y-1 flex flex-col h-full"
                             >
-                                {/* Certificate Image Thumbnail - Fixed Aspect Ratio */}
+                                {/* Certificate Image Thumbnail */}
                                 <div
-                                    className="cursor-pointer relative overflow-hidden rounded-t-lg aspect-[5/3]"
+                                    className="cursor-pointer relative overflow-hidden"
                                     onClick={() => setSelectedCertificate(certificate)}
                                 >
                                     {certificate.file ? (
-                                        <>
-                                            <img
-                                                src={certificate.file}
-                                                alt={certificate.title}
-                                                className="w-max h-max object-cover hover:scale-105 transition-transform duration-500"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                                                <span className="text-white font-medium">Click to view</span>
-                                            </div>
-                                        </>
+                                        <img
+                                            src={certificate.file}
+                                            alt={certificate.title}
+                                            className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500"
+                                        />
                                     ) : (
-                                        <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                                        <div className="w-full h-48 bg-gray-800 flex items-center justify-center">
                                             <span className="text-gray-500">No preview</span>
                                         </div>
                                     )}
-                                </div>
-
-                                {/* Certificate Info - Minimal */}
-                                <div className="p-4 flex-grow flex flex-col">
-                                    <h3 className="text-lg font-semibold text-orange-400 mb-2 line-clamp-2">
-                                        {certificate.title}
-                                    </h3>
-
-                                    {/* Badge and Date in one line */}
-                                    <div className="mt-auto flex justify-between items-center">
-                                        {certificate.lisensi && (
-                                            <span className="inline-block bg-orange-500/20 text-orange-400 text-xs px-2 py-1 rounded-full">
-                                                {certificate.lisensi}
-                                            </span>
-                                        )}
-                                        {certificate.start_date && (
-                                            <span className="text-xs text-gray-400">
-                                                {new Date(certificate.start_date).getFullYear()}
-                                            </span>
-                                        )}
-                                    </div>
                                 </div>
                             </motion.div>
                         ))
@@ -95,7 +69,7 @@ export default function CertificatesSection({ certificates }) {
                     className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 cursor-pointer"
                     onClick={() => setSelectedCertificate(null)}
                 >
-                    <div className="relative w-full h-full max-w-6xl max-h-[90vh]">
+                    <div className="relative w-full h-full max-w-4xl max-h-[90vh]">
                         <button
                             className="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors z-10"
                             onClick={() => setSelectedCertificate(null)}
@@ -117,11 +91,6 @@ export default function CertificatesSection({ certificates }) {
                                     <h3 className="text-xl font-bold text-orange-400">
                                         {selectedCertificate.title}
                                     </h3>
-                                    {selectedCertificate.lisensi && (
-                                        <p className="text-white text-sm mt-1">
-                                            {selectedCertificate.lisensi}
-                                        </p>
-                                    )}
                                 </div>
                             </div>
                         </div>

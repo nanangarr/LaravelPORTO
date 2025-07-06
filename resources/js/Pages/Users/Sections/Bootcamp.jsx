@@ -60,7 +60,20 @@ export default function BootcampSection({ bootcamps = [] }) {
                                                 <p className="text-sm text-gray-400 mb-4">
                                                     {bootcamp.start_date} - {bootcamp.end_date}
                                                 </p>
-                                                <p className="text-white mb-4">{bootcamp.description}</p>
+                                                <p className="text-white mb-4">
+                                                    {Array.isArray(bootcamp.description)
+                                                        ? (
+                                                            <ul className="list-disc pl-5">
+                                                                {bootcamp.description.map((item, index) => (
+                                                                    <li key={index}>{item}</li>
+                                                                ))}
+                                                            </ul>
+                                                        ) : (
+                                                            bootcamp.description.split('\n').map((line, index) => (
+                                                                <p key={index}>{line}</p>
+                                                            ))
+                                                        )}
+                                                </p>
                                             </div>
                                         </div>
                                     </motion.div>

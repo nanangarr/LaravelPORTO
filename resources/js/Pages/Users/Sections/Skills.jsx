@@ -2,6 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 export default function SkillsSection({ skills }) {
+    // Duplicate the skills array to create a seamless loop effect
+    const loopingSkills = [...skills, ...skills, ...skills, ...skills];
+
     return (
         <section
             id="skills"
@@ -21,34 +24,31 @@ export default function SkillsSection({ skills }) {
                 <div className="overflow-hidden">
                     {skills && skills.length > 0 ? (
                         <motion.div
-                            className="flex gap-6"
-                            initial={{ x: "100%" }}
+                            className="flex gap-12"
+                            initial={{ x: 0 }}
                             animate={{ x: "-100%" }}
                             transition={{
                                 repeat: Infinity,
                                 repeatType: "loop",
-                                duration: 10,
+                                duration: 20,
                                 ease: "linear",
                             }}
                         >
-                            {skills.map((skill, index) => (
-                                <div
-                                    key={index}
-                                    className="text-center text-orange-300"
-                                >
+                            {loopingSkills.map((skill, index) => (
+                                <div className="text-center text-orange-300 flex-shrink-0">
                                     {skill.image && (
                                         <div className="mb-4">
                                             <img
                                                 src={skill.image}
                                                 alt={skill.name}
-                                                className="w-16 h-16 mx-auto object-center"
+                                                className="w-20 h-20 mx-auto object-contain"
                                             />
                                         </div>
                                     )}
                                     <h3 className="text-lg font-medium">
                                         {skill.name}
                                     </h3>
-                                </div>
+                            </div>
                             ))}
                         </motion.div>
                     ) : (

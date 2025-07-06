@@ -51,9 +51,19 @@ export default function ExperiencesSection({ experiences }) {
                                 </div>
 
                                 {experience.description && (
-                                    <p className="text-white leading-relaxed">
-                                        {experience.description}
-                                    </p>
+                                    Array.isArray(experience.description) ? (
+                                        <ul className="text-white leading-relaxed list-disc pl-5">
+                                            {experience.description.map((item, index) => (
+                                                <li key={index}>{item}</li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        experience.description.split('\n').map((line, index) => (
+                                            <p key={index} className="text-white leading-relaxed">
+                                                {line}
+                                            </p>
+                                        ))
+                                    )
                                 )}
                             </motion.div>
                         ))

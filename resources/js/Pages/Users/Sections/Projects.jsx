@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 
 export default function ProjectsSection({ projects }) {
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedProject, setSelectedProject] = useState(null);
     const projectsPerPage = 6;
 
     // Pagination logic
@@ -13,6 +14,14 @@ export default function ProjectsSection({ projects }) {
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
+    };
+
+    const openModal = (project) => {
+        setSelectedProject(project);
+    };
+
+    const closeModal = () => {
+        setSelectedProject(null);
     };
 
     return (
@@ -45,12 +54,12 @@ export default function ProjectsSection({ projects }) {
                             transition={{ duration: 0.5 }}
                             className="bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-orange-500/20 transition-all duration-300 group"
                         >
-                            <div className="relative overflow-hidden h-48">
+                            <div className="relative overflow-hidden h-48" onClick={() => openModal(project)}>
                                 {project.image && (
                                     <img
                                         src={project.image}
                                         alt={project.title}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 cursor-pointer"
                                     />
                                 )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
@@ -118,6 +127,46 @@ export default function ProjectsSection({ projects }) {
                     </div>
                 )}
             </div>
+
+            {/* Modal */}
+            {selectedProject && (
+                <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+                    <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg max-w-3xl w-full">
+                        <div className="relative">
+                            {selectedProject.image && (
+                                <img
+                                    src={selectedProject.image}
+                                    alt={selectedProject.title}
+                                    className="w-full h-64 object-cover"
+                                />
+                            )}
+                            <button
+                                onClick={closeModal}
+                                className="absolute top-4 right-4 text-white bg-gray-700 hover:bg-gray-600 rounded-full p-2"
+                            >
+                                ✕
+                            </button>
+                        </div>
+                        <div className="p-6">
+                            <h3 className="text-2xl font-bold mb-4 text-white">{selectedProject.title}</h3>
+                            <p className="text-white mb-4">{selectedProject.description}</p>
+
+                            {selectedProject.skills?.length > 0 && (
+                                <div className="flex flex-wrap gap-2 mb-4">
+                                    {selectedProject.skills.map((skill) => (
+                                        <span
+                                            key={skill.id}
+                                            className="px-3 py-1 bg-orange-300/50 rounded-full text-xs text-white"
+                                        >
+                                            {skill.name}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </motion.section>
     );
 }
